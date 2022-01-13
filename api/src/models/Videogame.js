@@ -13,11 +13,9 @@ module.exports = (sequelize) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
-
     },
     description_raw:{
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     released:{
@@ -41,9 +39,9 @@ module.exports = (sequelize) => {
 
     },
     background_image:{
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
-
+      
     },
     
     createdInDb:{

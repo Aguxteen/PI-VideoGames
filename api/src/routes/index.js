@@ -18,7 +18,7 @@ router.get("/videogames", async (req,res)=>{
         
         const game = await All.filter(e=> e.name.toLowerCase().includes(name.toLowerCase()))
         game.length ? res.status(200).send(game) : 
-        res.status(404).send("El juego no existe")}
+        res.status(404).send({name:"El juego no existe"})}
     else{
         res.status(200).send(All)}
     
@@ -31,15 +31,16 @@ router.get("/videogames", async (req,res)=>{
 router.get("/videogame/:ID",async(req,res)=>{
     var id=req.params.ID
     if (typeof id !== "string") id.toString();
-    try{
-       var Db= await Videogame.findOne({where:{name: id} })
-        if(Db){res.status(200).send(Db)}else{
+    if(id.includes("-")){
+       var Db= await Videogame.findOne({where:{id: id} })
+        res.status(200).send(Db)}
+        else{
         var Api = await axios.get(`https://api.rawg.io/api/games/${id}?key=${key}`)
-       Api = await Api.data
+       Api = Api.data
         res.status(200).send(Api)}
        
 
-    }catch(error){res.status(500).send(error)}
+    
 
 })
 router.get("/genres",async (req,res)=>{
@@ -57,14 +58,19 @@ router.get("/genres",async (req,res)=>{
 
 router.post("/videogame", async (req,res)=>{
     let {name, released, background_image, rating, description_raw, platforms, genres} = req.body
+    try{
     let newVideogame = await Videogame.create({
         name, released, background_image, rating, description_raw, platforms, genres
     })
     let GenresMatch = await Genre.findAll({where: {name: genres}})
     newVideogame.addGenre(GenresMatch)
-    res.send("Videojuego añadido")
+    res.send("Videojuego añadido")}catch(error){res.status(500).send(error)}
 })
-
+router.get("/platforms", async (req,res)=>{
+    let plataformas = await axios.get("https://api.rawg.io/api/platforms?key="+ key)
+    let platforms= plataformas.data.results
+    res.status(200).send(platforms)
+})
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 /*
