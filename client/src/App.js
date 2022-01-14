@@ -4,10 +4,21 @@ import Landing from './components/Landing';
 import Home from './components/Home';
 import CreateVideogames from './components/CreateVideogame';
 import Detail from './components/Detail';
+import { createGlobalStyle } from 'styled-components';
+
+const GlobalSyle=createGlobalStyle`
+body{
+  font-family: 'Exo', sans-serif;
+
+}
+div{
+  flex-grow: 1;
+}
+`
 function App() {
   return (
     <BrowserRouter>
-    
+    <GlobalSyle/>
     <div className="App">
     <Switch>
         <Route exact path="/">

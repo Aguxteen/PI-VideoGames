@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Numbers,NumbersDiv } from "./StyledComponents";
 export default function Pages({videogames,NumberOfGames,pages}){
 const pageNumbers=[]
 
@@ -8,19 +8,19 @@ for(let x=0;x<=Math.floor(videogames/NumberOfGames); x++){
     pageNumbers.push(x+1)
 }
 return(
-    <nav>
+    <NumbersDiv >
         
         <ul>
             {pageNumbers&& pageNumbers.map(n=>(
 
                 
-                    <a key={n} onClick={()=>pages(n)}>{n}</a>
+                    <Numbers key={n} onClick={()=>pages(n)}>{n}</Numbers>
                
             )
 
             )}
         </ul>
-    </nav>
+    </NumbersDiv>
 
 
 

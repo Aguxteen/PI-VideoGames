@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { useEffect } from "react";
 import { validar } from "./Validar";
-
+import {DivCentral,ButtonMini,Textazo,MyInput,Cuestionario,Error,DivExplicativo,Conteiner,THEFORGEBUTTON} from "./StyledComponents"
 
 
 export default function CreateVideogames(){
@@ -72,92 +72,111 @@ const handleSubmit=(e)=>{
         dispatch(getGenres())
         
     },[dispatch])
-    return(<div>
-        <Link to="/home"><button>HOME</button></Link>
+    return(
+    <DivCentral>
+        <Link to="/home"><ButtonMini>HOME</ButtonMini></Link>
+        
+        <h1>THE FORGE</h1>
         <form onSubmit={e=>handleSubmit(e)} >
+        <Cuestionario>
+            <div>
+            <div>
             <div>
                 <label>Name:</label>
-                <input type="text"
+                <MyInput type="text"
                 value={input.name}
                 name="name"
                 onChange={e=>handleOnChange(e)}
                 autocomplete ="off"
-
+                placeholder="Name..."
                 />
+            {errors.name&& <Error>{errors.name}</Error>}
             </div>
-            {errors.name&& <p>{errors.name}</p>}
             <div>
                 <label>Realised:</label>
-                <input type="text"
+                <MyInput type="text"
                 value={input.released}
                 name="released"
                 onChange={e=>handleOnChange(e)}
                 autocomplete ="off"
-
+                placeholder="Released..."
                 />
             </div>
             
             <div>
                 <label>Desription:</label>
-                <br/>
-                <textarea type="text"
+                <Textazo type="text"
                 value={input.description_raw}
                 name="description_raw"
                 onChange={e=>handleOnChange(e)}
-                autocomplete ="off"/>
+                autocomplete ="off"
+                placeholder="Description..."
+                />
+            {errors.description_raw&& <Error>{errors.description_raw}</Error>}
             </div>
-            {errors.description_raw&& <p>{errors.description_raw}</p>}
             <div>
                 <label>URL image:</label>
-                <input type="text"
+                <MyInput type="text"
                 value={input.background_image}
                 name="background_image"
                 onChange={e=>handleOnChange(e)}
                 autocomplete ="off"
-
+                placeholder="Url..."
                 />
             </div>
             
 
             <div>
                 <label>rating:</label>
-                <input type="text"
+                <MyInput type="text"
                 value={input.rating}
                 name="rating"
                 onChange={e=>handleOnChange(e)}
                 autocomplete ="off"
+                placeholder="Rating number..."
                 />
+            {errors.rating&& <Error>{errors.rating}</Error>}
             </div>
-            {errors.rating&& <p>{errors.rating}</p>}
-            <div>
-                <label>Genres:</label>
+            </div>
+                <h3>Genres:</h3>
+            <Conteiner>
             {genres.map(e=>
-               <label> <input 
+               <label> <MyInput 
                 type="checkbox"
                 name="genres"
                 value={e.name}
                 onChange={e=>handleTick(e)}
                 />{e.name}</label>
             )}
+            </Conteiner>
+            {errors.genres&& <Error>{errors.genres}</Error>}
             </div>
-            {errors.genres&& <p>{errors.genres}</p>}
-
-            <br/>
+            <DivExplicativo>
+                <h2>Rules of THE FORGE:</h2>
+                <ul>
+                    <li>THE FORGE will not create games without names, a rating and a description</li>
+                    <li>The qualification must be a number greater than 1 and less than 101 to be accepted by THE FORGE</li>
+                    <li>THE FORGE requires a minimum of a platform and a gender to create a new entity</li>
+                    <li>Creating an entity with THE FORGE implies giving part of your soul to THE FORGE</li>
+                    {(!errors.rating&&!errors.name&&!errors.description_raw&&input.name!==""&&!errors.platforms&&!errors.genres )
+                && <THEFORGEBUTTON type="submit">CREATE</THEFORGEBUTTON>}
+                </ul>
+            </DivExplicativo>
+        
+            </Cuestionario>
             <div>
-                <label>Platforms:</label>
+                <h3>Platforms:</h3>
             {platform.map(e=>
-               <label> <input 
+               <label> <MyInput 
                 type="checkbox"
                 name="platforms"
                 value={e.name}
                 onChange={e=>handleTick(e)}
                 />{e.name}</label>
             )}
+            {errors.platforms&& <Error>{errors.platforms}</Error>}
             </div>
-            {errors.platforms&& <p>{errors.platforms}</p>}
-
-                {(!errors.rating&&!errors.name&&!errors.description_raw&&input.name!==""&&!errors.platforms&&!errors.genres )
-                && <button type="submit">CREATE</button>}
-        </form>
-    </div>)
+                
+            </form>
+    </DivCentral>)
 }
