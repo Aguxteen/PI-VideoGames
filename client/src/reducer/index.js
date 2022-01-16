@@ -7,7 +7,8 @@ const initialState = {
     order:"None",
     None:[],
     plataformas:[],
-    detail:{}
+    detail:{},
+    register:""
 }
 function rootReducer(state=initialState,{payload, type}){
     switch(type){
@@ -33,7 +34,15 @@ function rootReducer(state=initialState,{payload, type}){
             }
         case "FILTER_CREATE":
             const gamess = state.AllGames
-            const filterr = payload === "CreatedOnDb" ? gamess.filter(e=>e.createdInDb===true) : gamess
+            var filterr
+            if(payload==="CreatedOnDb"){
+                 filterr =  gamess.filter(e=>e.createdInDb===true) 
+            }else if(payload==="NotCreatedOnDb"){
+                filterr =  gamess.filter(e=>e.createdInDb===undefined) 
+            }else{
+                filterr= gamess
+            }
+           
             return{
                 ...state,
                 videogames: filterr,
@@ -53,15 +62,19 @@ function rootReducer(state=initialState,{payload, type}){
             }
         case "POST":
             return {
-                ...state
+                ...state,
+                register: payload
             }
         case "GET_DETAIL":
             console.log(payload)
-        var {name,background_image,rating, genres,platforms,description_raw,released}=payload
+        var {id,name,background_image,rating, genres,platforms,description_raw,released}=payload
+        // if (typeof id !== "string") id.toString();
+        console.log(id)
+        console.log(typeof id !== "string")
+        if(typeof id !== "string"){
         genres= genres.map(e=>e.name)
-        console.log("EEEEEEEEEEEEEEEEE",platforms)
-        platforms= platforms.map(e=>e.platform.name)
-        console.log("EEEEEEEEEEEEEEEEE2",platforms)
+        platforms= platforms.map(e=>e.platform.name)}
+        
 
             return {
                 ...state,

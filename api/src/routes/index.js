@@ -14,16 +14,24 @@ router.get("/videogames", async (req,res)=>{
     const {name} = req.query
     try{
     const All = await getAll()
+    var c=0;
     if(name){
         
-        const game = await All.filter(e=> e.name.toLowerCase().includes(name.toLowerCase()))
-        game.length ? res.status(200).send(game) : 
-        res.status(404).send({name:"El juego no existe"})}
+        const game = await All.filter(e=>{  if(c<15&&e.name.toLowerCase().includes(name.toLowerCase())){
+            c++
+            return e
+        }} )
+
+        if(game.length===0){
+            res.status(404).send(game) 
+        }
+        res.status(200).send(game) 
+    }
     else{
         res.status(200).send(All)}
     
         }catch(error){
-         res.status(500).send(error)
+         res.status(error).send(error)
         }
     
    
@@ -64,7 +72,7 @@ router.post("/videogame", async (req,res)=>{
     })
     let GenresMatch = await Genre.findAll({where: {name: genres}})
     newVideogame.addGenre(GenresMatch)
-    res.send("Videojuego añadido")}catch(error){res.status(500).send(error)}
+    res.send("Successful forging")}catch(error){res.status(error).send("Oh, oh, it seems that the forge failed")}
 })
 router.get("/platforms", async (req,res)=>{
     let plataformas = await axios.get("https://api.rawg.io/api/platforms?key="+ key)

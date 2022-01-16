@@ -4,10 +4,10 @@ export function getVideogames(payload){
     return async (dispatch)=>{
         if(!payload){
             var ola=""
-        }else{ var ola=payload}
+        }else{ ola=payload}
         try{
         var games= await axios.get(`http://localhost:3001/videogames?name=${ola}`,{})
-    }catch(error){throw "404 not found"}
+    }catch(error){throw error}
         return dispatch({
             type: "GET_VIDEOGAMES",
             payload: games.data
@@ -63,10 +63,10 @@ export function Order(payload){
 
 
 
-export function getVideogame(){
-    return async (payload)=>{
+export function getVideogame(payload){
+    return async (dispatch)=>{
         var game = await axios.get(`http://localhost:3001/videogame/${payload}`)
-        return ({
+        return dispatch({
             type: "GET_VIDEOGAMEID",
             payload: game.data
         })
@@ -74,12 +74,12 @@ export function getVideogame(){
 
 }
 export function postVideogames (payload){
-    return async ()=>{
-        await axios.post(`http://localhost:3001/videogame`,payload)
+    return async (dispatch)=>{
+        var res= await axios.post(`http://localhost:3001/videogame`,payload)
         console.log("CONSOLE LOG DEL POST")
-        return ({
-            type: "POST"
-
+        return dispatch({
+            type: "POST",
+            payload:res.data
         })
     }
 }

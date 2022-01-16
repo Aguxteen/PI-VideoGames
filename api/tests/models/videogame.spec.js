@@ -14,8 +14,27 @@ describe('Videogame model', () => {
           .then(() => done(new Error('It requires a valid name')))
           .catch(() => done());
       });
-      it('should work when its a valid name', () => {
-        Recipe.create({ name: 'Super Mario Bros' });
+      it('should throw an error if description is null', (done) => {
+        Videogame.create({ name: 'PORTAL' })
+          .then(() => done(new Error('It requires a valid description')))
+          .catch(() => done());
+      });
+      it('should throw an error if platforms is null', (done) => {
+        Videogame.create({
+          name: 'PORTAL',
+          description_raw: 'Tiene portales puzzles y eso',
+        })
+          .then(() => done(new Error('It requires a valid platforms')))
+          .catch(() => done());
+      });
+      
+      it('It should work when its a valid name, a valid description, and platforms', (done) => {
+        Videogame.create({
+          name: 'PORTAL',
+          description_raw: 'Tiene portales puzzles y eso',
+          platforms: 'pc'
+        })
+        .catch(() => done());
       });
     });
   });

@@ -5,13 +5,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { useEffect } from "react";
 import { validar } from "./Validar";
-import {DivCentral,ButtonMini,Textazo,MyInput,Cuestionario,Error,DivExplicativo,Conteiner,THEFORGEBUTTON} from "./StyledComponents"
-
+import {DivCentral,ButtonMini,Textazo,MyInput,Cuestionario,Error,DivExplicativo,Conteiner,ConteinerEnc} from "./StyledComponents"
+import gif from "../ShovelSmith.gif"
 
 export default function CreateVideogames(){
 const dispatch = useDispatch()
 const genres= useSelector(state=>state.genres)
 const platform= useSelector(state=>state.plataformas)
+const register= useSelector(state=>state.register)
+
+const [Excuse, setExcuse] = useState("")
 const [errors,setErrors]= useState({})
 const [input,setInput] = useState({
     name:"",
@@ -30,9 +33,13 @@ const handleOnChange=(e)=>{
         ...input,
         [e.target.name]: e.target.value
     }))
-    
+    setExcuse("")
     console.log(errors)
 
+}
+const handleExcuse= (e)=>{
+    setExcuse(e.target.value)
+    setErrors(validar(input))
 }
 const handleTick=async (e)=>{
     if(e.target.checked){
@@ -40,18 +47,24 @@ const handleTick=async (e)=>{
             ...input,
             [e.target.name]: [...input[e.target.name],e.target.value]
         })
+        
+       
     }else{
        let alo = input[e.target.name].filter(ev=>ev!==e.target.value)
         setInput({
             ...input,
             [e.target.name]: alo
         })
+        
+       
     }
     setErrors(validar({
         ...input,
         [e.target.name]: e.target.value
     }))
+    setExcuse("")
     console.log(input)
+    console.log(errors)
 }
 const handleSubmit=(e)=>{
     e.preventDefault()
@@ -65,7 +78,7 @@ const handleSubmit=(e)=>{
         rating:"",
         genres: [],
         platforms:[]})
-        alert("Personaje creado")
+        alert("The materials were sent to the forge")
 }
     useEffect(()=>{
         dispatch(getPlatforms())
@@ -80,9 +93,9 @@ const handleSubmit=(e)=>{
         <form onSubmit={e=>handleSubmit(e)} >
         <Cuestionario>
             <div>
+            <ConteinerEnc>
             <div>
-            <div>
-                <label>Name:</label>
+            <h3>Name:</h3>
                 <MyInput type="text"
                 value={input.name}
                 name="name"
@@ -90,10 +103,9 @@ const handleSubmit=(e)=>{
                 autocomplete ="off"
                 placeholder="Name..."
                 />
-            {errors.name&& <Error>{errors.name}</Error>}
             </div>
             <div>
-                <label>Realised:</label>
+            <h3>Released:</h3>
                 <MyInput type="text"
                 value={input.released}
                 name="released"
@@ -104,7 +116,7 @@ const handleSubmit=(e)=>{
             </div>
             
             <div>
-                <label>Desription:</label>
+            <h3>Description:</h3>
                 <Textazo type="text"
                 value={input.description_raw}
                 name="description_raw"
@@ -112,10 +124,10 @@ const handleSubmit=(e)=>{
                 autocomplete ="off"
                 placeholder="Description..."
                 />
-            {errors.description_raw&& <Error>{errors.description_raw}</Error>}
+            
             </div>
             <div>
-                <label>URL image:</label>
+            <h3>Image:</h3>
                 <MyInput type="text"
                 value={input.background_image}
                 name="background_image"
@@ -127,7 +139,7 @@ const handleSubmit=(e)=>{
             
 
             <div>
-                <label>rating:</label>
+            <h3>Rating:</h3>
                 <MyInput type="text"
                 value={input.rating}
                 name="rating"
@@ -135,13 +147,17 @@ const handleSubmit=(e)=>{
                 autocomplete ="off"
                 placeholder="Rating number..."
                 />
+            
+            </div>
+            </ConteinerEnc>
+                {errors.name&& <Error>{errors.name}</Error>}
+                {errors.description_raw&& <Error>{errors.description_raw}</Error>}
             {errors.rating&& <Error>{errors.rating}</Error>}
-            </div>
-            </div>
                 <h3>Genres:</h3>
             <Conteiner>
             {genres.map(e=>
                <label> <MyInput 
+                key={e.name}
                 type="checkbox"
                 name="genres"
                 value={e.name}
@@ -150,7 +166,9 @@ const handleSubmit=(e)=>{
             )}
             </Conteiner>
             {errors.genres&& <Error>{errors.genres}</Error>}
+            
             </div>
+            <div>
             <DivExplicativo>
                 <h2>Rules of THE FORGE:</h2>
                 <ul>
@@ -158,25 +176,41 @@ const handleSubmit=(e)=>{
                     <li>The qualification must be a number greater than 1 and less than 101 to be accepted by THE FORGE</li>
                     <li>THE FORGE requires a minimum of a platform and a gender to create a new entity</li>
                     <li>Creating an entity with THE FORGE implies giving part of your soul to THE FORGE</li>
-                    {(!errors.rating&&!errors.name&&!errors.description_raw&&input.name!==""&&!errors.platforms&&!errors.genres )
-                && <THEFORGEBUTTON type="submit">CREATE</THEFORGEBUTTON>}
+                    <li>Give your signature to THE FORGE to accept the conditions</li>
+                    
+                <MyInput type="text"
+                value={Excuse}
+                name="Excuse"
+                onChange={e=>handleExcuse(e)}
+                autocomplete ="off"
+                placeholder="Your signature here..."
+                />
+                    <br/>
+                    {(!errors.rating&&!errors.name&&!errors.description_raw&&input.name!==""&&!errors.platforms&&!errors.genres&&Excuse )
+                && <ButtonMini type="submit">FORGE</ButtonMini>}
+                    <br/>
                 </ul>
+                {register && <p>Last Forge Result: {register}</p>} 
             </DivExplicativo>
+                <img src={ gif } alt=""/>
+            </div>
         
             </Cuestionario>
-            <div>
                 <h3>Platforms:</h3>
+            <Conteiner>
             {platform.map(e=>
                <label> <MyInput 
+                key={e.name}
                 type="checkbox"
                 name="platforms"
                 value={e.name}
                 onChange={e=>handleTick(e)}
                 />{e.name}</label>
             )}
+            </Conteiner>
             {errors.platforms&& <Error>{errors.platforms}</Error>}
-            </div>
                 
             </form>
+            
     </DivCentral>)
 }

@@ -16,7 +16,7 @@ export const validar=(input)=>{
         errors.genres="A plataform is required"
     }
     
-    if(input){
+    if(input.rating){
         
         if(isNaN(input.rating)){ 
 
@@ -26,6 +26,9 @@ export const validar=(input)=>{
     }else if(input.rating<1){
         errors.rating="Rating must be more than 1*"
     }
+}else{
+    errors.rating="A Rating is required*"
+}
     if(!input.genres[0]){
         errors.genres="Minimum one gender is required*"
 
@@ -35,5 +38,7 @@ export const validar=(input)=>{
 
     }
     
-    return errors
-}} 
+    
+
+return errors
+} 

@@ -10,20 +10,116 @@ import styles,{ keyframes } from "styled-components"
     azul 119DA4
     azuloscuro 0A014F
 
+
 */
+
+const Girar =keyframes` 
+    0% {
+      left: -19%;
+      transform: rotate(0deg);
+    }
+    30%{
+        transform: rotate(360deg);
+    }
+    
+    60%{transform: rotate(720deg);}
+
+    90%{ transform: rotate(1080deg);}
+
+    100% {
+      transform: rotate(1180deg);
+    }
+    
+  
+`
+const CaminarMole =keyframes` 
+    0% {
+      left:-29%; 
+    }
+    70%{
+        left: 35%;
+        
+    }
+    71%{
+        transform: scaleX(1); left: 35%;
+    }
+    72%{
+        transform: scaleX(-1); left: 35%;
+    }
+    100% {
+        left:-29%;
+        transform: scaleX(-1);
+    }
+    
+  
+`
+
+export const AnimationZone = styles.div`
+position:relative;
+
+height: 86vh;
+`
+export const Mole = styles.img`
+position:absolute;
+left: 0;
+height: 150px;
+left: -119%;
+bottom: -8px;
+animation-name: ${CaminarMole};
+animation-duration: 10s;
+animation-iteration-count: 1;
+animation-timing-function:linear;
+`
+
+
 export const  BigDiv= styles.div`
 background-color: rgb(232, 241, 242);
-width: 40%;
-height:20% ;
-    border-radius:10px;
+padding: 40px;
+padding-top: 60px;
+padding-bottom: 60px;
+
+    left: 53.5%;
+    border-radius:50%;
     position:absolute;
-    top:35%;
-    left:30%
+    bottom: 1px;
+    transform: rotate(1180deg);
+     animation-name: ${Girar};
+animation-duration: 8s;
+animation-iteration-count: 1;
+animation-timing-function:linear;
+`
+export const Tierra = styles.img`
+position:absolute;
+bottom:-10px;
+left:66vw;
+height: 150px;
+`
+const Ruedito = keyframes`
+ 0% {left:-45%; }
+ 
+ 50% { left:43%;  transform: scaleX(1); }
+ 52%{ left:43%; transform: scaleX(-1);}
+ 98% { left:-45%;  transform: scaleX(-1); }
+ 100%{  transform: scaleX(1);}
+
+`
+export const Ruedita = styles.div`
+margin-top: 20px;
+position:relative;
+display: inline-block;
+left:-45%;
+top: 35px;
+animation-name: ${Ruedito};
+animation-duration: 6s;
+animation-iteration-count: infinite;
+animation-timing-function:linear;
+
+
 `
 export const DivCentral = styles.div`
 background-color: rgb(232, 241, 242);
 padding:10px;
-margin-top:20px;
+margin-top:30px;
 margin-right:50px;
 margin-left:50px;
 border-radius: 20px; 
@@ -65,7 +161,7 @@ transition-duration: 0.4s;
 cursor: pointer;
 border-radius: 10px; 
 &:hover {
-    background-color: #E59F71;
+    background-color: #0A014F;
     color: rgb(232, 241, 242);
 
 }
@@ -121,7 +217,7 @@ padding: 10px ;
 border: 1px solid #119DA4;
 border-radius:5px;
 transition-duration: .4s;
-
+cursor: pointer;
 &:hover {
     background-color: rgb(232, 241, 242);
     color: #0A014F;
@@ -132,18 +228,25 @@ transition-duration: .4s;
 export const Imagen=styles.img`
 border-radius:10px;
 border: 1px solid #0A014F;
-transition-duration: .4s;
 
 
 
 `
 export const NumbersDiv=styles.div`
-background-color: rgba(229, 159, 113, 0.35);
-display: inline-block;
+background-color: rgba(229, 159, 113, 0.55);
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
 padding: 5px;
+padding-top: 15px;
+width: 2%;
 border: 1px solid #119DA4;
 border-radius:5px;
 
+`
+export const DivRandom=styles.div`
+display: flex;
+justify-content: center;
 
 `
 export const Numbers=styles.a`
@@ -159,6 +262,15 @@ border-radius:5px;
     border-radius:30%;
 
 }
+
+`
+export const Number=styles.a`
+background-color: #0A014F;
+color: rgb(232, 241, 242);
+padding: 10px;
+border: 1px solid #119DA4;
+border-radius:5px;
+
 `
 export const MySelect=styles.select`
 background-color: #0A014F;
@@ -201,7 +313,10 @@ export const Cuestionario=styles.div`
 display: flex;
 justify-content:flex-start;
 flex:none;
+500px;
     gap: 20px;
+    padding-left:250px;
+ padding-right:250px;
 `
 export const Error =styles.p`
 color: red;
@@ -211,10 +326,9 @@ border: 1px solid red;
 export const DivExplicativo=styles.div`
  background-color: #0A014F;
  color: rgb(232, 241, 242);
- flex-grow: 2;
  padding-left:100px;
  padding-right:100px;
-    height: 350px;
+    height: 590px;
  border-radius:10px;
  box-shadow: 0px 12px 16px 0px rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
  margin:20px;
@@ -223,7 +337,18 @@ export const Conteiner=styles.div`
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    
     flex:none;
+    padding: 5px;
+    gap:2px;
+    margin:20px;
+    background-color: #B3EFB2;
+    border-radius:10px;
+    box-shadow: 0px 12px 16px 0px rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+
+`
+
+ export const ConteinerEnc=styles.div`
     padding: 5px;
     margin:20px;
     background-color: #B3EFB2;
@@ -231,69 +356,37 @@ export const Conteiner=styles.div`
     box-shadow: 0px 12px 16px 0px rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 
 `
-const FORGE = keyframes`
- 0% { padding-left: 30px;
-padding-right: 30px;
-padding-top: 20px;
-padding-bottom: 20px; }
- 50% {  padding-left: 30px;
-padding-right: 30px;
-padding-top: 25px;
-padding-bottom: 25px; }
- 
- 100% { padding-left: 30px;
-padding-right: 30px;
-padding-top: 20px;
-padding-bottom: 20px;}
+export const DivCircular=styles.div`
+width: 100px;
+     height: 100px;
+     -moz-border-radius: 50%;
+     -webkit-border-radius: 50%;
+     border-radius: 50%;
+margin: 10px;
+padding:5px;
+display: inline-block;
+background-color: rgb(255, 215, 0);
+border-radius: 50%;
+border: 1px solid #E8F1F2;
+color: black;
+box-shadow: 0px 12px 16px 0px rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 
 `
-const RAGE = keyframes`
- 0% { padding-left: 30px;
-padding-right: 30px;
-padding-top: 20px;
-padding-bottom: 20px; }
- 25% {  padding-left: 30px;
-padding-right: 35px;
-padding-top: 25px;
-padding-bottom: 20px; }
-50% {  padding-left: 35px;
-padding-right: 30px;
-padding-top: 20px;
-padding-bottom: 25px; }
-75% {  padding-left: 30px;
-padding-right: 35px;
-padding-top: 25px;
-padding-bottom: 20px; }
- 100% { padding-left: 30px;
-padding-right: 30px;
-padding-top: 20px;
-padding-bottom: 20px; }
+
+export const DivGris = styles.div`
+background-color:#0A014F;
+color: #E8F1F2;
+padding: 20px;
+border-radius:10px;
+width:400px;
+box-shadow: 0px 12px 16px 0px rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+margin:20px;
+`
+export const DivVerde = styles.div`
+background-color:#B3EFB2;
+color: black;
+padding: 5px;
+border-radius:10px;
+box-shadow: 0px 12px 16px 0px rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 
 `
-export const THEFORGEBUTTON = styles.button`
-margin-top:15px;
-
-padding-left: 30px;
-padding-right: 30px;
-padding-top: 20px;
-padding-bottom: 20px;
-color:rgb(232, 241, 242);
-animation-name: ${FORGE};
-border-style: solid;
-border-width: 1px;
-border-radius: 30%;
-border-color: rgb(232, 241, 242);
-background-color: #8B0000;
-animation-duration: 8s;
-animation-iteration-count: infinite;
-transition-duration: .3s;
-&:hover {
-    background-color:  #DC143C;
-    animation-duration: 2s;
-    animation-name: ${RAGE};
-    
-   
-    
-}
- `
- 
