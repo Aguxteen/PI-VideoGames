@@ -46,11 +46,11 @@ export default function Detail(){
            </div>
                <h3>Genres</h3>
                <div>
-               <CardConteiner >{detalle.genres&&detalle.genres.map(e=>(<DivVerde >{e}</DivVerde>))}</CardConteiner>
+               <CardConteiner >{detalle.genres&&detalle.genres.map(e=>(<DivVerde key={e} >{e}</DivVerde>))}</CardConteiner>
                </div>
                <h3>Platforms</h3>
                <div >
-               <CardConteiner >{detalle.platforms&&detalle.platforms.map(e=>(<DivVerde>{e}</DivVerde>))}</CardConteiner>
+               <CardConteiner >{detalle.platforms&&detalle.platforms.map(e=>(<DivVerde key={e}>{e}</DivVerde>))}</CardConteiner>
                </div>
            </DivGris>
            </Cuestionario>

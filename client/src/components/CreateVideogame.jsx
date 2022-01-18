@@ -86,7 +86,7 @@ const handleSubmit=(e)=>{
         
     },[dispatch])
     return(
-    <DivCentral>
+    <DivCentral >
         <Link to="/home"><ButtonMini>HOME</ButtonMini></Link>
         
         <h1>THE FORGE</h1>

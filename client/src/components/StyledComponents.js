@@ -56,7 +56,7 @@ const CaminarMole =keyframes`
 
 export const AnimationZone = styles.div`
 position:relative;
-
+width: 100vw;
 height: 86vh;
 `
 export const Mole = styles.img`

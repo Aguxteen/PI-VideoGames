@@ -21,7 +21,7 @@ const habdleSubmit = (e)=>{
 }
     return(
         <div >
-        <Search type="text" placeholder="Búsqueda..." onChange={e=>handleInputChange(e)}>
+        <Search type="text" placeholder="Búsqueda..." value={busqueda} onChange={e=>handleInputChange(e)}>
         </Search>
         <ButtonSearch type="submit" onClick={e=>habdleSubmit(e)}>Buscar</ButtonSearch>
         </div>

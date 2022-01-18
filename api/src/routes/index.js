@@ -17,15 +17,15 @@ router.get("/videogames", async (req,res)=>{
     var c=0;
     if(name){
         
-        const game = await All.filter(e=>{  if(c<15&&e.name.toLowerCase().includes(name.toLowerCase())){
+        const game = All.filter(e=>{  if(c<15&&e.name.toLowerCase().includes(name.toLowerCase())){
             c++
             return e
         }} )
 
         if(game.length===0){
-            res.status(404).send(game) 
-        }
-        res.status(200).send(game) 
+            res.status(204).send(game) 
+        }else{res.status(200).send(game) }
+        
     }
     else{
         res.status(200).send(All)}

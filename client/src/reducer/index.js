@@ -4,8 +4,6 @@ const initialState = {
     videogames: [],
     genres:[],
     AllGames:[],
-    order:"None",
-    None:[],
     plataformas:[],
     detail:{},
     register:""
@@ -17,44 +15,16 @@ function rootReducer(state=initialState,{payload, type}){
                 ...state,
                 videogames: payload,
                 AllGames:payload,
-                None:payload,
+                
             }
         case "GET_GENRES":
             return{
                 ...state,
                 genres: payload
             }
-        case "FILTER_GENRES":
-            const games = state.AllGames
-            const filter= payload === "All"? games : games.filter(e=>e.genres.includes(payload))
-            return{
-                ...state,
-                videogames: filter,
-                None:filter
-            }
-        case "FILTER_CREATE":
-            const gamess = state.AllGames
-            var filterr
-            if(payload==="CreatedOnDb"){
-                 filterr =  gamess.filter(e=>e.createdInDb===true) 
-            }else if(payload==="NotCreatedOnDb"){
-                filterr =  gamess.filter(e=>e.createdInDb===undefined) 
-            }else{
-                filterr= gamess
-            }
-           
-            return{
-                ...state,
-                videogames: filterr,
-                None:filterr
-
-            }
-        case "ORDER":
-            return {
-                ...state,
-                order:payload
-                
-            }
+        
+        
+        
         case "GET_PLATFORMS":
             return {
                 ...state,
@@ -69,8 +39,7 @@ function rootReducer(state=initialState,{payload, type}){
             console.log(payload)
         var {id,name,background_image,rating, genres,platforms,description_raw,released}=payload
         // if (typeof id !== "string") id.toString();
-        console.log(id)
-        console.log(typeof id !== "string")
+        
         if(typeof id !== "string"){
         genres= genres.map(e=>e.name)
         platforms= platforms.map(e=>e.platform.name)}
@@ -80,36 +49,78 @@ function rootReducer(state=initialState,{payload, type}){
                 ...state,
                 detail: {name,background_image,rating, genres,platforms,description_raw,released}
             }
-        case "ORDER_TYPE":
-             const jueguitos= state.videogames
-             var FiltName
-             if(payload==="None"){
-                    
-                     FiltName = state.None
-             }
-              if(payload==="Asc") {  FiltName = jueguitos.sort((a,b)=>{
-                 if(a[state.order]>b[state.order]){
-                    return 1
-                 }
-                 if(b[state.order]>a[state.order]){
-                    return -1
-                 }
-                 return 0
-             })} 
-             if(payload==="Des"){  FiltName =jueguitos.sort((a,b)=>{
-                if(a[state.order]>b[state.order]){
-                   return -1
-                }
-                if(b[state.order]>a[state.order]){
-                   return 1
-                }
-                return 0
-            })}
-            return{
-                ...state,
-                videogames:FiltName
-            } 
+        
+            case"SUPER_FILTER":
+            const {
+                Genre, // all - any genre
+                Created, // all-created-notCreated
+                OrderedBy, // none-name-rating
+                Order, // Asc-Des
+                
+            }= payload
             
+            var Games = state.AllGames
+            // filtrado de generos
+            var TODO= Genre === "all"? Games : Games.filter(e=>e.genres.includes(Genre))
+            // filtrado por creacion
+            if(Created==="created"){
+                TODO =  TODO.filter(e=>e.createdInDb===true) 
+           }else if(Created==="notCreated"){
+            TODO =  TODO.filter(e=>e.createdInDb===undefined) 
+           }
+           // ordenamiento por nombre 
+           if(OrderedBy==="name"){
+               
+            if(Order==="Asc") {  TODO =  TODO.sort((a,b)=>{
+                
+               if(a[OrderedBy].toLowerCase()>b[OrderedBy].toLowerCase()){
+                  return 1
+               }
+               if(b[OrderedBy].toLowerCase()>a[OrderedBy].toLowerCase()){
+                  return -1
+               }
+               return 0
+           })} 
+           if(Order==="Des"){  TODO = TODO.sort((a,b)=>{
+              if(a[OrderedBy].toLowerCase()>b[OrderedBy].toLowerCase()){
+                 return -1
+              }
+              if(b[OrderedBy].toLowerCase()>a[OrderedBy].toLowerCase()){
+                 return 1
+              }
+              return 0
+          })}
+        }
+        // ordenamiento por rating 
+        if(OrderedBy==="rating"){
+            
+         if(Order==="Asc") {  TODO =  TODO.sort((a,b)=>{
+             console.log(a[OrderedBy]," YYYYY ",a)
+            if(a[OrderedBy]>b[OrderedBy]){
+               return 1
+            }
+            if(b[OrderedBy]>a[OrderedBy]){
+               return -1
+            }
+            return 0
+        })} 
+        if(Order==="Des"){  TODO = TODO.sort((a,b)=>{
+           if(a[OrderedBy]>b[OrderedBy]){
+              return -1
+           }
+           if(b[OrderedBy]>a[OrderedBy]){
+              return 1
+           }
+           return 0
+       })}
+     }
+        
+        return {
+            ...state,
+            videogames:TODO
+        }
+        
+
             default:
             return {...state}
     }

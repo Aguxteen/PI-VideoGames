@@ -18,7 +18,7 @@ export default function Landing(){
         <Tierra src={rock} alto="piedra"/>
             <Mole styles={{height:"300px"}}src={mole} alt="Mole"/>
             
-        
+            
         </AnimationZone>
         </div>
     )

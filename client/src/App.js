@@ -1,10 +1,10 @@
 import './App.css';
 import {BrowserRouter, Route,Switch} from "react-router-dom"
 import Landing from './components/Landing';
-import Home from './components/Home';
 import CreateVideogames from './components/CreateVideogame';
 import Detail from './components/Detail';
 import { createGlobalStyle } from 'styled-components';
+import NewHome from './components/NewHome';
 
 const GlobalSyle=createGlobalStyle`
 body{
@@ -25,7 +25,7 @@ function App() {
           <Landing/>
         </Route>
         <Route exact path="/home">
-          <Home/>
+          <NewHome/>
         </Route>
         <Route exact path="/Create">
           <CreateVideogames/>
