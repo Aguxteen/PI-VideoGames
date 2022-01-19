@@ -36,7 +36,7 @@ function rootReducer(state=initialState,{payload, type}){
                 register: payload
             }
         case "GET_DETAIL":
-            console.log(payload)
+            
         var {id,name,background_image,rating, genres,platforms,description_raw,released}=payload
         // if (typeof id !== "string") id.toString();
         
@@ -95,7 +95,6 @@ function rootReducer(state=initialState,{payload, type}){
         if(OrderedBy==="rating"){
             
          if(Order==="Asc") {  TODO =  TODO.sort((a,b)=>{
-             console.log(a[OrderedBy]," YYYYY ",a)
             if(a[OrderedBy]>b[OrderedBy]){
                return 1
             }

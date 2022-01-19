@@ -34,7 +34,7 @@ const handleOnChange=(e)=>{
         [e.target.name]: e.target.value
     }))
     setExcuse("")
-    console.log(errors)
+    
 
 }
 const handleExcuse= (e)=>{
@@ -152,7 +152,8 @@ const handleSubmit=(e)=>{
             </ConteinerEnc>
                 {errors.name&& <Error>{errors.name}</Error>}
                 {errors.description_raw&& <Error>{errors.description_raw}</Error>}
-            {errors.rating&& <Error>{errors.rating}</Error>}
+                {errors.rating&& <Error>{errors.rating}</Error>}
+                {errors.released&& <Error>{errors.released}</Error>}
                 <h3>Genres:</h3>
             <Conteiner>
             {genres.map(e=>

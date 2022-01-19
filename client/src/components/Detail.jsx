@@ -7,19 +7,19 @@ import { DivCentral,ButtonMini,Imagen,DivCircular,Cuestionario,DivGris,CardConte
 
 
 export default function Detail(){
-    console.log(window.location)
+    
     const dispatch=useDispatch() 
     const href = window.location.href.split("/")
     const id = href[4]
     
-    console.log("EYYYY",id)
+    
     const detalle= useSelector(state=>state.detail)
    useEffect(()=>{
        dispatch(getDetail(id))
    },[dispatch,id])
    
 
-   console.log("detalle",detalle)
+   
     
    return(
       
