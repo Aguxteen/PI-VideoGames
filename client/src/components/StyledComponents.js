@@ -131,7 +131,7 @@ box-shadow: 0px 12px 16px 0px rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,1.19);
 export const CardConteiner=styles.div`
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
     flex:none;
     gap: 20px;

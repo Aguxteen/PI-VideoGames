@@ -15,13 +15,15 @@ export default function NewHome(){
     const dispatch= useDispatch()
     var AllGames=useSelector(state=>state.videogames)
     var AllGenres=useSelector(state=>state.genres)
+
     
+    console.log("ALLGAME HERE",AllGames)
     const [CurrentPage, setCurrentPage] = useState(1)
     const [NumberOfGames, setNumbreOfGames] = useState(15)
     const indexOfLastGame = CurrentPage * NumberOfGames // calcula el numero del ultimo juego que se va a paginar
     const indexOfFirstGame = indexOfLastGame - NumberOfGames // calcula el numero del primer juego que se va a paginar
     const currentGames = AllGames&&AllGames.slice(indexOfFirstGame,indexOfLastGame)
-    
+    console.log(currentGames)
     const [Info , setInfo] = useState({
         Genre: "all", // all - any genre
         OrderedBy: "none", // none-name-rating
@@ -138,7 +140,7 @@ export default function NewHome(){
                 {AllGames ? <CardConteiner >
                  {
                      
-                     currentGames.length? currentGames.map(e=>{return(
+                     (currentGames.length && currentGames[0])? currentGames.map(e=>{return(
                          <div key={e.name} styles={{flexgrow:1}}>
                      
                      <Card  key={e.name} id={e.id} name={e.name} image={e.background_image? e.background_image: "https://t3.ftcdn.net/jpg/02/96/58/56/360_F_296585661_rCaiPkhfSMLwNJ6dSGsUssblwb5rrU9Z.jpg"} genres={e.genres}/>

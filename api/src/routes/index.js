@@ -3,6 +3,7 @@ const {getAll} =require ("./Funciones.js")
 const { Genre, Videogame } = require("../db");
 const { default: axios } = require("axios");
 const {key} = process.env;
+const { Op } = require("sequelize");
 // Importar todos los routers;
 
 // Ejemplo: const authRouter = require('./auth.js');
@@ -12,23 +13,44 @@ const router = Router();
 
 router.get("/videogames", async (req,res)=>{
     const {name} = req.query
+    var c=0
     try{
-    const All = await getAll()
-    var c=0;
+    
     if(name){
         
-        const game = All.filter(e=>{  if(c<15&&e.name.toLowerCase().includes(name.toLowerCase())){
-            c++
-            return e
-        }} )
-
-        if(game.length===0){
-            res.status(204).send(game) 
-        }else{res.status(200).send(game) }
+       const DB = await Videogame.findAll({
+           where:{name: {[Op.substring]: name} },
+           limit:15,
+       })
+       
+       c= DB.length
+        var Api = await axios.get(`https://api.rawg.io/api/games?key=${key}&search=${name}`)
+            console.log("LENGTH",Api.data.results.length)
+           Api= Api.data.results.map(e => {
+                const { id, genres, name, background_image, rating,platforms,released } = e;
+                
+                
+                return {
+                    id,
+                    name,
+                    released,
+                    background_image,
+                    rating,
+                    genres: genres.map(e=>e.name),
+                    platforms: platforms.map(e=>e.platform.name)
+                }
+            })
+            Api= Api.filter(e=>{if(c<15){ c++;
+                if(e){return true}
+                } return false})
+            Api = Api.concat(DB)
+            res.status(200).send(Api) 
+       
         
-    }
-    else{
-        res.status(200).send(All)}
+        }else{
+            const All = await getAll()
+            res.status(200).send(All)
+        }
     
         }catch(error){
          res.status(error).send(error)

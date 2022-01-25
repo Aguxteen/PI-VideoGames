@@ -6,6 +6,7 @@ import Detail from './components/Detail';
 import { createGlobalStyle } from 'styled-components';
 import NewHome from './components/NewHome';
 
+
 const GlobalSyle=createGlobalStyle`
 body{
   font-family: 'Exo', sans-serif;
@@ -33,6 +34,7 @@ function App() {
         <Route  path="/Game/">
           <Detail/>
         </Route>
+        
     </Switch>  
     </div>
     </BrowserRouter>
