@@ -3,10 +3,9 @@
 </p>
 
 # Individual Project - Henry Videogames
+<p>Video:</p>
 
-<p align="right">
-  <img height="200" src="./videogame.png" />
-</p>
+[![Alt text](https://img.youtube.com/vi/yd5lb5eTv44/0.jpg)](https://www.youtube.com/watch?v=yd5lb5eTv44)
 
 ## Objetivos del Proyecto
 
