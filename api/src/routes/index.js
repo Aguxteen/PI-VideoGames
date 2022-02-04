@@ -2,8 +2,8 @@ const { Router } = require ('express');
 const {getAll} =require ("./Funciones.js")
 const { Genre, Videogame } = require("../db");
 const { default: axios } = require("axios");
-const {key} = process.env;
 const { Op } = require("sequelize");
+const {key} = process.env;
 // Importar todos los routers;
 
 // Ejemplo: const authRouter = require('./auth.js');
@@ -74,6 +74,7 @@ router.get("/videogame/:ID",async(req,res)=>{
 
 })
 router.get("/genres",async (req,res)=>{
+    
     var generosApi = await axios.get(`https://api.rawg.io/api/genres?key=${key}`)
     var genresNames =  generosApi.data.results.map( e=> e.name)
     for(let x=0;x<genresNames.length ;x++){
@@ -100,6 +101,9 @@ router.get("/platforms", async (req,res)=>{
     let plataformas = await axios.get("https://api.rawg.io/api/platforms?key="+ key)
     let platforms= plataformas.data.results
     res.status(200).send(platforms)
+})
+router.get("/hola",(req,res)=>{
+    res.status(202).send("emmmnose")
 })
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);

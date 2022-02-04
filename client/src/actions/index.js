@@ -7,7 +7,7 @@ export function getVideogames(payload){
         }else{ ola=payload}
         try{
             console.log("SOY OLA",ola)
-        var games= await axios.get(`https://git.heroku.com/jogos-pedro.git/videogames?name=${ola}`,{})
+        var games= await axios.get(`http://localhost:3001/videogames?name=${ola}`,{})
     }catch(error){throw error}
         return dispatch({
             type: "GET_VIDEOGAMES",
@@ -22,7 +22,7 @@ export function getVideogame(payload){
         
         
         try{
-        var games= await axios.get(`https://git.heroku.com/jogos-pedro.git/videogame?name=${payload}`,{})
+        var games= await axios.get(`http://localhost:3001/videogame?name=${payload}`,{})
     }catch(error){throw error}
         return dispatch({
             type: "GET_VIDEOGAMES",
@@ -34,7 +34,7 @@ export function getVideogame(payload){
 
 export function getGenres(){
     return async (dispatch)=>{
-        var genres= await axios.get(`https://git.heroku.com/jogos-pedro.git/genres`)
+        var genres= await axios.get(`http://localhost:3001/genres`)
         return dispatch({
             type: "GET_GENRES",
             payload: genres.data
@@ -44,7 +44,7 @@ export function getGenres(){
 
 export function postVideogames (payload){
     return async (dispatch)=>{
-        var res= await axios.post(`https://git.heroku.com/jogos-pedro.git/videogame`,payload)
+        var res= await axios.post(`http://localhost:3001/videogame`,payload)
         console.log("CONSOLE LOG DEL POST")
         return dispatch({
             type: "POST",
@@ -55,7 +55,7 @@ export function postVideogames (payload){
 
 export function getPlatforms(){
     return async(dispatch)=>{
-        var plat=await axios.get("https://git.heroku.com/jogos-pedro.git/platforms")
+        var plat=await axios.get("http://localhost:3001/platforms")
         return dispatch({
             type: "GET_PLATFORMS",
             payload: plat.data
@@ -65,7 +65,7 @@ export function getPlatforms(){
 
 export function getDetail(payload){
     return async (dispatch)=>{
-        var detail = await axios.get("https://git.heroku.com/jogos-pedro.git/videogame/" + payload)
+        var detail = await axios.get("http://localhost:3001/videogame/" + payload)
 
         return dispatch({
             type:"GET_DETAIL",
